@@ -1,0 +1,3 @@
+{
+    "pandoc.pdfOptString": "--template=template-basicletter.tex"
+}

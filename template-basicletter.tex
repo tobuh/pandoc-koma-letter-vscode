@@ -1,0 +1,161 @@
+%%
+% German Latex Letter Template 
+% Use if you want to crate a Letter in DIN A4. You can use it in English and German 
+% as well, just set language at begining of plain text.
+% Created by Jan Boelmann @ Nov. 2016 Jan.boelmann@live.de
+% Adapted to pandoc by tobuh (https://github.com/tobuh)
+%%
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\documentclass[
+    sender,
+    paper=a4,
+    version=last,
+$if(fontsize)$
+    fontsize=$fontsize$,
+$else$
+    fontsize=11pt,
+$endif$
+    DIV=13,
+    BCOR=0mm]{scrlttr2}
+\parskip3mm
+\parindent0mm % if you want to have no lineskip
+\usepackage[english,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{hyperref}
+% Set Font: sans serif Latin Modern
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+% Tables
+\usepackage{longtable}
+\usepackage{booktabs}
+% Set Page layout:
+\usepackage{changepage}
+%\changepage{text height}{text width}{even-side margin}
+%{odd-side margin}{column sep.}
+%{topmargin}{headheight}{headsep}{footskip}
+\changepage{+3cm}{}{}{}{}{}{}{}{-5cm}
+%%
+% German Latex Letter Template 
+% Use if you want to crate a Letter in DIN A4. You can use it in English and German 
+% as well, just set language at begining of plain text.
+% Created by Jan Boelmann @ Nov. 2016 Jan.boelmann@live.de
+%%
+
+% symbols: Mobilephone, Phone, E-Mail
+\RequirePackage{marvosym}
+
+% Text of this document (sender.lco) is UTF-8 encoded
+\RequirePackage[utf8]{inputenc}
+
+% if yu wnat some colors...
+\RequirePackage{color}
+
+\setplength{firstheadwidth}{\textwidth}
+\setplength{toaddrhpos}{\oddsidemargin}
+\addtoplength{toaddrhpos}{1in}
+
+% see Koma script for more detailed descriptions
+% comment or delate if not needed
+\KOMAoptions{
+    foldmarks=true,
+    fromalign=right,
+    footsepline=off,
+$if(url)$
+    fromurl=true,
+$else$
+    fromurl=off,
+$endif$
+$if(email)$
+    fromemail=true,
+$else$
+    fromemail=off,
+$endif$
+    fromfax=off,
+$if(phone)$
+    fromphone=true,
+$else$
+    fromphone=off,
+$endif$
+$if(cellular)$
+    frommobilephone=true,
+$else$
+    frommobilephone=off,
+$endif$
+}
+
+
+
+% You can define colors here like this...
+%\definecolor{mygray}{gray}{.55}
+%\definecolor{myblue}{rgb}{0.25,0.45,0.75}
+
+
+% Sender data:
+$if(phone)$\setkomavar{fromphone}[\Telefon~]{$phone$}$endif$
+$if(cellular)$\setkomavar{frommobilephone}[\Mobilefone~]{$cellular$}$endif$
+$if(email)$\setkomavar{fromemail}[\Letter~]{$email$}$endif$
+$if(url)$\setkomavar{fromurl}[]{$url$}$endif$
+%\setkomavar{backaddress}{$for(address)$$address$$sep$, $endfor$}
+%\setkomavar{fromaddress}{$for(address)$$address$$sep$\\$endfor$}
+\setkomavar{backaddress}{$author$, $address.street$, $address.city$}
+\setkomavar{fromaddress}{$author$\\$address.street$\\$address.city$}
+
+% optical stuff:
+\setkomafont{fromname}{\bfseries\color{black}\LARGE}
+\setkomafont{fromrule}{\color{black}}
+\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape\color{black}}
+% maybe in blue...
+%\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape\color{myblue}}
+\setkomafont{addressee}{\small}
+
+
+%\setkomavar{signature}{$for(author)$$author$$sep$\\$endfor$}
+\setkomavar{signature}{$author$}
+\renewcommand*{\raggedsignature}{\raggedright}
+
+\begin{document}
+% Set Appendix text at very end (dubble point will be set automatically)
+\setkomavar*{enclseparator}{Anhang}
+% subject, date, place:
+\setkomavar{subject}{$subject$}
+\setkomavar{date}{$date$}
+$if(place)$
+\setkomavar{place}{$place$}
+$endif$
+
+% Set recipient of letter
+%\begin{letter}{$for(recipient)$$recipient$$sep$\\$endfor$}
+\begin{letter}{$recipient.name$\\$recipient.street$\\$recipient.city$}
+\opening{$opening$}
+
+% Write here your Letter text. You can choose here the language for typeset. ("english", or "ngerman")
+\selectlanguage{ngerman}
+%\parindent2mm
+
+$body$
+
+%\selectlanguage{english}%Choose language for closing text
+\closing{$closing$} % use "Mit freundlich Grüßen" i.e. 
+$if(encl)$
+\encl{$for(encl)$$encl$$sep$\\$endfor$}
+%\encl{
+%    \begin{minipage}[t]{0.5\linewidth}
+%    \begin{itemize}
+%        \item Eins
+%        \item Zwei
+%    \end{itemize}
+%    \end{minipage}
+%}
+$endif$
+% end of letter
+\end{letter}
+
+\end{document}
+
